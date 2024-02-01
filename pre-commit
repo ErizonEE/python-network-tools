@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Este script sirve para evitar los commits directos a develop/main
+# Recordar dar permisos de ejecución
+
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+forbidden_branches=("main" "develop")
+
+# Verificar si se está intentando hacer un commit directo a una rama prohibida
+if [[ " ${forbidden_branches[@]} " =~ " ${current_branch} " ]]; then
+    echo "No puedes hacer commit directo a la rama ${current_branch}."
+    echo "Por favor, crea una nueva rama y haz un pull request."
+    exit 1  # Abortar el commit
+fi
